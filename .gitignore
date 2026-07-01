@@ -35,6 +35,8 @@ uploads/
 weaviate_data/
 qdrant_data/
 *.log
+*.jsonl
+run_logs/
 
 # Streamlit
 .streamlit/secrets.toml
