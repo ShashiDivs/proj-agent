@@ -8,3 +8,4 @@ azure-identity
 openai
 langchain-community
 tavily
+langchain-groq

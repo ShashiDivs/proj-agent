@@ -8,8 +8,18 @@ _NAME = "formatter"
 
 def formatter_agent(state: dict) -> dict:
     tracer.start_agent(_NAME)
-    system     = fmt(get_prompt(_NAME, "system"), state)
-    user       = fmt(get_prompt(_NAME, "user"),   state)
+
+    system = fmt(get_prompt(_NAME, "system"), state)
+
+    # Append user's itinerary revision note if they provided one
+    feedback = state.get("itinerary_feedback", "").strip()
+    feedback_section = (
+        f"\n\nUser revision note (incorporate this into the final plan):\n{feedback}"
+        if feedback else ""
+    )
+
+    user = fmt(get_prompt(_NAME, "user"), state) + feedback_section
+
     final_plan = call_llm(_NAME, system, user)
     return {
         "final_plan": final_plan,
